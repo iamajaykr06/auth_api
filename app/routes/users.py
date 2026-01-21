@@ -17,6 +17,12 @@ def create_user():
     if not email or not password:
         raise APIError("Email and password required", 400)
 
+    if "@" not in email:
+        raise APIError("Invalid email format", 400)
+
+    if len(password) < 8:
+        raise APIError("Password too short", 400)
+
     UserService.create_user(email, password)
 
     return {"message": "User created"}, 201

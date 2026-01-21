@@ -11,10 +11,11 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(DevelopmentConfig)
+    register_error_handlers(app)
+    jwt.init_app(app)
     app.register_blueprint(users_bp)
 
-    jwt.init_app(app)
-    register_error_handlers(app)
+
 
     @app.route("/health")
     def health_check():

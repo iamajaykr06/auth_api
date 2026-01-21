@@ -1,4 +1,4 @@
-from app.models.user import UserModel
+from app.models.users import UserModel
 from app.utils.security import hash_password
 from app.utils.errors import APIError
 

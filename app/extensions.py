@@ -9,5 +9,5 @@ def get_db_connection():
         host = current_app.config["DB_HOST"],
         user = current_app.config["DB_USER"],
         password = current_app.config["DB_PASSWORD"],
-        name = current_app.config["DB_NAME"]
+        database = current_app.config["DB_NAME"]
     )
