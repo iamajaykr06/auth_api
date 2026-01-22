@@ -25,3 +25,13 @@ class UserModel:
         cursor.close()
         conn.close()
         return user
+
+    @staticmethod
+    def find_by_id(user_id):
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT id, email, created_at FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return user
