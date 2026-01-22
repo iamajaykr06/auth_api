@@ -10,3 +10,7 @@ def test_create_user(client):
         content_type="application/json"
     )
     assert response.status_code == 201
+
+def test_profile_requires_auth(client):
+    response = client.get("/users/me")
+    assert response.status_code == 401
