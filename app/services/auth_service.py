@@ -1,5 +1,5 @@
 from flask_jwt_extended import create_access_token
-from app.models.users import UserModel
+from app.models.user import UserModel
 from app.utils.security import verify_password
 from app.utils.errors import APIError
 
@@ -15,5 +15,5 @@ class AuthService:
         if not verify_password(password, user["password_hash"]):
             raise APIError("Invalid credentials", 401)
 
-        token = create_access_token(identity=user["id"])
+        token = create_access_token(identity=str(user["id"]))
         return token
