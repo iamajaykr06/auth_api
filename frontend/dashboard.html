@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureAuth - Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2>SecureAuth</h2>
+            <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Your account information</p>
+            </div>
+            
+            <div id="loadingMessage" class="loading-message">Loading your profile...</div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            
+            <div id="userInfo" class="user-info" style="display: none;">
+                <div class="info-item">
+                    <label>User ID:</label>
+                    <span id="userId"></span>
+                </div>
+                <div class="info-item">
+                    <label>Email:</label>
+                    <span id="userEmail"></span>
+                </div>
+                <div class="info-item">
+                    <label>Account Created:</label>
+                    <span id="userCreatedAt"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

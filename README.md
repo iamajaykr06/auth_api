@@ -1,7 +1,6 @@
-# AUTH_API
+# SecureAuth
 
-A RESTful authentication API built with Flask and JSON Web Tokens (JWT).
-The API provides user authentication, protected routes, and secure token-based access.
+A full-stack authentication application with a modern web frontend and RESTful API backend built with Flask and JSON Web Tokens (JWT). The application provides user registration, authentication, protected routes, and secure token-based access with a beautiful, responsive user interface.
 
 ---
 
@@ -10,7 +9,7 @@ The API provides user authentication, protected routes, and secure token-based a
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd auth_api
+   cd secureauth
    ```
 
 2. **Create a virtual environment**
@@ -51,7 +50,57 @@ The API provides user authentication, protected routes, and secure token-based a
    ```bash
    python run.py
    ```
-   The API will be available at `http://localhost:5000`
+   The application will be available at `http://localhost:5000`
+   - Frontend: `http://localhost:5000` (Login page)
+   - API endpoints: `http://localhost:5000/auth/*` and `http://localhost:5000/users/*`
+
+---
+
+## Quick Start Guide
+
+### Using the Web Interface
+
+1. **Open your browser** and navigate to `http://localhost:5000`
+
+2. **Create an account:**
+   - Click on "Sign up" link on the login page
+   - Enter your email and password (minimum 8 characters)
+   - Confirm your password
+   - Click "Create Account"
+   - You'll be redirected to the login page
+
+3. **Login:**
+   - Enter your email and password
+   - Click "Login"
+   - You'll be redirected to your dashboard
+
+4. **View your profile:**
+   - The dashboard displays your user ID, email, and account creation date
+   - Click "Logout" to sign out
+
+### Using the API Directly
+
+You can also interact with the API directly using tools like `curl` or Postman:
+
+**Register a user:**
+```bash
+curl -X POST http://localhost:5000/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password123"}'
+```
+
+**Login:**
+```bash
+curl -X POST http://localhost:5000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password123"}'
+```
+
+**Get profile (replace TOKEN with your access token):**
+```bash
+curl -X GET http://localhost:5000/users/me \
+  -H "Authorization: Bearer TOKEN"
+```
 
 ---
 
@@ -170,6 +219,55 @@ Returns the health status of the API.
 ```
 **Status Code:** 200
 
+---
+
+## Frontend
+
+SecureAuth includes a modern, responsive web frontend built with vanilla HTML, CSS, and JavaScript. The frontend provides a seamless user experience for authentication and account management.
+
+### Frontend Pages
+
+#### Login Page (`/` or `/index.html`)
+- User authentication interface
+- Email and password input with validation
+- Error handling and user feedback
+- Automatic redirect to dashboard on successful login
+
+#### Registration Page (`/register.html`)
+- New user account creation
+- Password confirmation
+- Real-time validation (email format, password length)
+- Success message and automatic redirect to login
+
+#### Dashboard (`/dashboard.html`)
+- Protected user profile page
+- Displays user information (ID, email, account creation date)
+- Logout functionality
+- Automatic redirect to login if not authenticated
+
+### Frontend Features
+
+- **Modern UI Design**: Clean, professional interface with gradient backgrounds and smooth animations
+- **Responsive Layout**: Works seamlessly on desktop, tablet, and mobile devices
+- **Token Management**: Automatic JWT token storage and management using localStorage
+- **Protected Routes**: Automatic authentication checks and redirects
+- **Error Handling**: User-friendly error messages for all API interactions
+- **Loading States**: Visual feedback during API requests
+- **Form Validation**: Client-side validation before API calls
+
+### Frontend Architecture
+
+The frontend is organized into modular JavaScript files:
+
+- `auth.js`: Core authentication utilities, API client, and token management
+- `login.js`: Login page functionality
+- `register.js`: Registration page functionality
+- `dashboard.js`: Dashboard page functionality
+
+All styling is centralized in `style.css` with CSS variables for easy theming.
+
+---
+
 ## Database Schema
 
 The application uses a MySQL database with a single `users` table.
@@ -218,6 +316,7 @@ pytest -v
 
 ## Tech Stack
 
+### Backend
 * Python 3.x
 * Flask 3.1.2
 * Flask-JWT-Extended 4.7.1
@@ -226,12 +325,19 @@ pytest -v
 * pytest 8.3.3 (for testing)
 * pytest-flask 1.3.0 (for Flask test fixtures)
 
+### Frontend
+* HTML5
+* CSS3 (with CSS Variables for theming)
+* Vanilla JavaScript (ES6+)
+* Fetch API for HTTP requests
+* LocalStorage for token management
+
 ---
 
 ## Project Structure
 
 ```
-auth_api/
+secureauth/
 ├── app/
 │   ├── __init__.py          # Application factory
 │   ├── config.py            # Configuration settings
@@ -247,11 +353,23 @@ auth_api/
 │   └── utils/
 │       ├── errors.py        # Error handling
 │       ├── logger.py        # Logging configuration
-│       └── security.py     # Password hashing utilities
+│       └── security.py      # Password hashing utilities
+├── frontend/
+│   ├── index.html           # Login page
+│   ├── register.html        # Registration page
+│   ├── dashboard.html       # User dashboard
+│   └── static/
+│       ├── css/
+│       │   └── style.css    # Main stylesheet
+│       └── js/
+│           ├── auth.js      # Authentication utilities
+│           ├── login.js     # Login page logic
+│           ├── register.js # Registration page logic
+│           └── dashboard.js # Dashboard page logic
 ├── tests/
 │   ├── conftest.py          # Pytest fixtures
 │   ├── test_auth.py         # Authentication tests
-│   └── test_users.py      # User management tests
+│   └── test_users.py        # User management tests
 ├── run.py                   # Application entry point
 ├── requirements.txt         # Python dependencies
 └── README.md               # This file
