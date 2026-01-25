@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY","dev-secret-key")
