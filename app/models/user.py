@@ -6,32 +6,40 @@ class UserModel:
     def create(email, password_hash):
         conn = get_db_connection()
         cursor = conn.cursor()
-        query = """
-            INSERT INTO users (email, password_hash)
-            VALUES (%s, %s)
-        """
-        cursor.execute(query, (email, password_hash))
-        conn.commit()
-        cursor.close()
-        conn.close()
+        try:
+            query = """
+                INSERT INTO users (email, password_hash)
+                VALUES (%s, %s)
+            """
+            cursor.execute(query, (email, password_hash))
+            conn.commit()
+            user_id = cursor.lastrowid
+            return user_id
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def find_by_email(email):
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        query = "SELECT * FROM users WHERE email = %s"
-        cursor.execute(query, (email,))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        return user
+        try:
+            query = "SELECT * FROM users WHERE email = %s"
+            cursor.execute(query, (email,))
+            user = cursor.fetchone()
+            return user
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def find_by_id(user_id):
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT id, email, created_at FROM users WHERE id = %s", (user_id,))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        return user
+        try:
+            cursor.execute("SELECT id, email, created_at FROM users WHERE id = %s", (user_id,))
+            user = cursor.fetchone()
+            return user
+        finally:
+            cursor.close()
+            conn.close()
